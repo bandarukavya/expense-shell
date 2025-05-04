@@ -14,6 +14,7 @@ N="\e[0m"
 if [ $USERID -ne 0 ]
 then
     echo "Please run this script with root access"
+    exit 1
 else
     echo "You are super user"
 
@@ -29,14 +30,14 @@ VALIDATE(){
     fi
 }
 
-dnf install mysql-server -y &>>LOGFILE
+dnf install mysql-server -y &>>$LOGFILE
 VALIDATE $? "Installing MYSQL Server"
 
-systemctl enable mysqld &>>LOGFILE
+systemctl enable mysqld &>>$LOGFILE
 VALIDATE $? "Enabling MYSQL Server"
 
-systemctl start mysqld &>>LOGFILE
+systemctl start mysqld &>>$LOGFILE
 VALIDATE $? "Starting MYSQL Server"
 
-mysql_secure_installation --set-root-pass ExpenseApp@1 &>>LOGFILE
+mysql_secure_installation --set-root-pass ExpenseApp@1 &>>$LOGFILE
 VALIDATE $? "Setting up root password"
